@@ -1,4 +1,5 @@
 #include <stdinclude.hpp>
+#include <./carrotjuicer/notifier.hpp>
 
 using namespace std;
 
@@ -26,7 +27,90 @@ namespace
 
 		printf("\n\n");
 	}
+	// CarrotJuice
+	std::string current_time()
+	{
+		const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+			std::chrono::system_clock::now().time_since_epoch());
+		return std::to_string(ms.count());
+	}
 
+	void write_file(const std::string& file_name, const char* buffer, const int len)
+	{
+		FILE* fp;
+		fopen_s(&fp, file_name.c_str(), "wb");
+		if (fp != nullptr)
+		{
+			fwrite(buffer, 1, len, fp);
+			fclose(fp);
+		}
+	}
+
+
+	void* LZ4_decompress_safe_ext_orig = nullptr;
+
+	int LZ4_decompress_safe_ext_hook(
+		char* src,
+		char* dst,
+		int compressedSize,
+		int dstCapacity)
+	{
+		const int ret = reinterpret_cast<decltype(LZ4_decompress_safe_ext_hook)*>(LZ4_decompress_safe_ext_orig)(
+			src, dst, compressedSize, dstCapacity);
+
+		const std::string data(dst, ret);
+
+		auto notifier_thread = std::thread([&]
+			{
+				notifier::notify_response(data);
+			});
+
+		notifier_thread.join();
+
+		return ret;
+	}
+
+	void* LZ4_compress_default_ext_orig = nullptr;
+
+	int LZ4_compress_default_ext_hook(
+		char* src,
+		char* dst,
+		int srcSize,
+		int dstCapacity)
+	{
+		const int ret = reinterpret_cast<decltype(LZ4_compress_default_ext_hook)*>(LZ4_compress_default_ext_orig)(
+			src, dst, srcSize, dstCapacity);
+
+		return ret;
+	}
+	void bootstrap_carrot_juicer()
+	{
+		const auto libnative_module = GetModuleHandle("libnative.dll");
+		printf("libnative.dll at %p\n", libnative_module);
+		if (libnative_module == nullptr)
+		{
+			return;
+		}
+
+		const auto LZ4_decompress_safe_ext_ptr = GetProcAddress(libnative_module, "LZ4_decompress_safe_ext");
+		printf("LZ4_decompress_safe_ext at %p\n", LZ4_decompress_safe_ext_ptr);
+		if (LZ4_decompress_safe_ext_ptr == nullptr)
+		{
+			return;
+		}
+		MH_CreateHook(LZ4_decompress_safe_ext_ptr, LZ4_decompress_safe_ext_hook, &LZ4_decompress_safe_ext_orig);
+		MH_EnableHook(LZ4_decompress_safe_ext_ptr);
+
+		const auto LZ4_compress_default_ext_ptr = GetProcAddress(libnative_module, "LZ4_compress_default_ext");
+		printf("LZ4_compress_default_ext at %p\n", LZ4_compress_default_ext_ptr);
+		if (LZ4_compress_default_ext_ptr == nullptr)
+		{
+			return;
+		}
+		MH_CreateHook(LZ4_compress_default_ext_ptr, LZ4_compress_default_ext_hook, &LZ4_compress_default_ext_orig);
+		MH_EnableHook(LZ4_compress_default_ext_ptr);
+	}
+	//Carrot Juice End
 	void* load_library_w_orig = nullptr;
 	HMODULE __stdcall load_library_w_hook(const wchar_t* path)
 	{
@@ -34,6 +118,7 @@ namespace
 		if (path == L"cri_ware_unity.dll"s)
 		{
 			path_game_assembly();
+			bootstrap_carrot_juicer();
 
 			MH_DisableHook(LoadLibraryW);
 			MH_RemoveHook(LoadLibraryW);
@@ -72,7 +157,7 @@ namespace
 		if (ssql.find(L"text_data") != std::string::npos ||
 			ssql.find(L"character_system_text") != std::string::npos ||
 			ssql.find(L"race_jikkyo_comment") != std::string::npos ||
-			ssql.find(L"race_jikkyo_message") != std::string::npos ) 
+			ssql.find(L"race_jikkyo_message") != std::string::npos)
 		{
 			text_queries.emplace(_this, true);
 		}
@@ -90,7 +175,7 @@ namespace
 	}
 
 	void* query_getstr_orig = nullptr;
-	Il2CppString*  query_getstr_hook(void* _this, int idx)
+	Il2CppString* query_getstr_hook(void* _this, int idx)
 	{
 		auto result = reinterpret_cast<decltype(query_getstr_hook)*>(query_getstr_orig)(_this, idx);
 
@@ -129,26 +214,26 @@ namespace
 
 			switch (wParam)
 			{
-				case WMSZ_TOP:
-				case WMSZ_TOPLEFT:
-				case WMSZ_TOPRIGHT:
-					rect->top = rect->bottom - height;
-					break;
-				default:
-					rect->bottom = rect->top + height;
-					break;
+			case WMSZ_TOP:
+			case WMSZ_TOPLEFT:
+			case WMSZ_TOPRIGHT:
+				rect->top = rect->bottom - height;
+				break;
+			default:
+				rect->bottom = rect->top + height;
+				break;
 			}
 
 			switch (wParam)
 			{
-				case WMSZ_LEFT:
-				case WMSZ_TOPLEFT:
-				case WMSZ_BOTTOMLEFT:
-					rect->left = rect->right - width;
-					break;
-				default:
-					rect->right = rect->left + width;
-					break;
+			case WMSZ_LEFT:
+			case WMSZ_TOPLEFT:
+			case WMSZ_BOTTOMLEFT:
+				rect->left = rect->right - width;
+				break;
+			default:
+				rect->right = rect->left + width;
+				break;
 			}
 
 			last_height = height;
@@ -254,7 +339,7 @@ namespace
 			text_set_size(_this, text_get_size(_this) - 4);
 			text_set_linespacing(_this, 1.05f);
 		}
-		
+
 		return reinterpret_cast<decltype(on_populate_hook)*>(on_populate_orig)(_this, toFill);
 	}
 
@@ -273,7 +358,7 @@ namespace
 
 		return reinterpret_cast<decltype(set_resolution_hook)*>(set_resolution_orig)(
 			need_fullscreen ? r.width : width, need_fullscreen ? r.height : height, need_fullscreen
-		);
+			);
 	}
 
 	void adjust_size()
@@ -289,7 +374,7 @@ namespace
 			set_resolution_hook(target_height * 0.5625f, target_height, false);
 
 			il2cpp_thread_detach(tr);
-		}).detach();
+			}).detach();
 	}
 
 	void* load_scene_internal_orig = nullptr;
@@ -302,7 +387,7 @@ namespace
 	void dump_all_entries()
 	{
 		// 0 is None
-		for(int i = 1;;i++)
+		for (int i = 1;;i++)
 		{
 			auto* str = reinterpret_cast<decltype(localize_get_hook)*>(localize_get_orig)(i);
 
@@ -352,12 +437,12 @@ namespace
 		// have to do this way because there's Get(TextId id) and Get(string id)
 		// the string one looks like will not be called by elsewhere
 		auto localize_get_addr = il2cpp_symbols::find_method("umamusume.dll", "Gallop", "Localize", [](const MethodInfo* method) {
-			return method->name == "Get"s && 
+			return method->name == "Get"s &&
 				method->parameters->parameter_type->type == IL2CPP_TYPE_VALUETYPE;
-		});
+			});
 
 		auto query_ctor_addr = il2cpp_symbols::get_method_pointer(
-			"LibNative.Runtime.dll", "LibNative.Sqlite3", 
+			"LibNative.Runtime.dll", "LibNative.Sqlite3",
 			"Query", ".ctor", 2
 		);
 
@@ -395,14 +480,14 @@ namespace
 			il2cpp_symbols::get_method_pointer(
 				"umamusume.dll", "Gallop",
 				"StandaloneWindowResize", "get_IsVirt", 0
-		));
+			));
 
 		get_resolution = reinterpret_cast<Resolution_t * (*)(Resolution_t*)>(
 			il2cpp_symbols::get_method_pointer(
-			"UnityEngine.CoreModule.dll", "UnityEngine",
-			"Screen", "get_currentResolution", 0
+				"UnityEngine.CoreModule.dll", "UnityEngine",
+				"Screen", "get_currentResolution", 0
 			)
-		);
+			);
 
 		auto gallop_get_screenheight_addr = il2cpp_symbols::get_method_pointer(
 			"umamusume.dll", "Gallop",
@@ -424,12 +509,12 @@ namespace
 			"CanvasScaler", "set_referenceResolution", 1
 		);
 
-		set_scale_factor = reinterpret_cast<void(*)(void*,float)>(
+		set_scale_factor = reinterpret_cast<void(*)(void*, float)>(
 			il2cpp_symbols::get_method_pointer(
 				"UnityEngine.UI.dll", "UnityEngine.UI",
 				"CanvasScaler", "set_scaleFactor", 1
 			)
-		);
+			);
 
 		auto on_populate_addr = il2cpp_symbols::get_method_pointer(
 			"umamusume.dll", "Gallop",
@@ -441,42 +526,42 @@ namespace
 				"UnityEngine.UI.dll", "UnityEngine.UI",
 				"Text", "AssignDefaultFont", 0
 			)
-		);
+			);
 
 		text_get_size = reinterpret_cast<int(*)(void*)>(
 			il2cpp_symbols::get_method_pointer(
 				"umamusume.dll", "Gallop",
 				"TextCommon", "get_FontSize", 0
 			)
-		);
+			);
 
 		text_set_size = reinterpret_cast<void(*)(void*, int)>(
 			il2cpp_symbols::get_method_pointer(
 				"umamusume.dll", "Gallop",
 				"TextCommon", "set_FontSize", 1
 			)
-		);
+			);
 
 		text_get_linespacing = reinterpret_cast<float(*)(void*)>(
 			il2cpp_symbols::get_method_pointer(
 				"UnityEngine.UI.dll", "UnityEngine.UI",
 				"Text", "get_lineSpacing", 0
 			)
-		);
+			);
 
 		text_set_style = reinterpret_cast<void(*)(void*, int)>(
 			il2cpp_symbols::get_method_pointer(
 				"UnityEngine.UI.dll", "UnityEngine.UI",
 				"Text", "set_fontStyle", 1
 			)
-		);
+			);
 
 		text_set_linespacing = reinterpret_cast<void(*)(void*, float)>(
 			il2cpp_symbols::get_method_pointer(
 				"UnityEngine.UI.dll", "UnityEngine.UI",
 				"Text", "set_lineSpacing", 1
 			)
-		);
+			);
 
 		auto set_resolution_addr = il2cpp_symbols::get_method_pointer(
 			"UnityEngine.CoreModule.dll", "UnityEngine",
@@ -502,13 +587,13 @@ namespace
 		{
 			ADD_HOOK(on_populate, "Gallop.TextCommon::OnPopulateMesh at %p\n");
 		}
-		
+
 		if (g_max_fps > -1)
 		{
 			// break 30-40fps limit
 			ADD_HOOK(set_fps, "UnityEngine.Application.set_targetFrameRate at %p \n");
 		}
-		
+
 		if (g_unlock_size)
 		{
 			// break 1080p size limit
@@ -528,7 +613,7 @@ namespace
 			ADD_HOOK(set_resolution, "UnityEngine.Screen.SetResolution(int, int, bool) at %p\n");
 			adjust_size();
 		}
-		
+
 		if (g_dump_entries)
 			dump_all_entries();
 	}

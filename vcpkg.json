@@ -1,0 +1,11 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
+  "name": "exnoa-carrotjuicer",
+  "version": "1.0.0",
+  "dependencies": [
+    "cpp-httplib",
+    "minhook",
+    "nlohmann-json",
+    "sqlitecpp"
+  ]
+}
