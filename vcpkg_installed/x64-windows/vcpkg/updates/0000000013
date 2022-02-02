@@ -1,0 +1,8 @@
+Package: sqlitecpp
+Feature: sqlite
+Depends: sqlite3
+Architecture: x64-windows
+Multi-Arch: same
+Description: Use the (unofficial) sqlite3 port of vcpkg
+Type: Port
+Status: install ok half-installed

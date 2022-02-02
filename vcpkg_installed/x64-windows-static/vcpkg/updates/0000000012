@@ -1,0 +1,10 @@
+Package: sqlitecpp
+Version: 3.1.1
+Port-Version: 1
+Architecture: x64-windows-static
+Multi-Arch: same
+Abi: 40c0776f6a60c3f9bdf3281f7edf0405887563f1c09b3814511e9ef6d2134bb7
+Description: SQLiteC++ (SQLiteCpp) is a smart and easy to use C++ SQLite3 wrapper.
+Type: Port
+Default-Features: sqlite
+Status: install ok half-installed

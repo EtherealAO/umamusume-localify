@@ -1,0 +1,7 @@
+x64-windows-static/
+x64-windows-static/include/
+x64-windows-static/include/httplib.h
+x64-windows-static/share/
+x64-windows-static/share/cpp-httplib/
+x64-windows-static/share/cpp-httplib/copyright
+x64-windows-static/share/cpp-httplib/vcpkg_abi_info.txt

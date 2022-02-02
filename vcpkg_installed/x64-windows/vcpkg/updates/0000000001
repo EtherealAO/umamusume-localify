@@ -1,0 +1,8 @@
+Package: cpp-httplib
+Version: 0.9.7
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 497138c4404923efd2b5126c378d55ff117bf061c673ad36b451fce73b7b5990
+Description: A single file C++11 header-only HTTP/HTTPS server and client library
+Type: Port
+Status: install ok installed
