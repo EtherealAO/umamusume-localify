@@ -1,6 +1,7 @@
 # 中文
 ## 赛马娘 (DMM版) 本地化补丁
 
+### 缝合[EXNOA-CarrotJuicer](https://github.com/CNA-Bld/EXNOA-CarrotJuicer)的抓包、http notifier到umamusume-localify里使解锁帧数可以同时和抓包使用
 ### 使用方法:
 1. 将 `version.dll` 和 `config.json` 以及 `config.json` 中引用的字典放置于 `umamusume.exe` 边上
 2. 启动游戏
@@ -34,6 +35,7 @@
 # English
 ## Uma Musume: Pretty Derby localify patch
 
+### Merge communication packets hook from [EXNOA-CarrotJuicer](https://github.com/CNA-Bld/EXNOA-CarrotJuicer)
 ### Usage:
 1. Put `version.dll`, `config.json` and the `dicts` referenced by `config.json` near the `umamusume.exe`.
 2. Launch the game
@@ -68,3 +70,6 @@
 - @羲羲
 ### tchinese
 - @yotv2000tw
+
+### EXNOA-CarrotJuicer
+- @CNA-Bld
