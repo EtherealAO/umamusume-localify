@@ -28,6 +28,10 @@ namespace
 		printf("\n\n");
 	}
 	// CarrotJuice
+	/*
+	Source code from https://github.com/CNA-Bld/EXNOA-CarrotJuicer by CNA-Bld
+	Released under MIT license. Copyright belongs to CNA-Bld(https://github.com/CNA-Bld)
+	*/
 	std::string current_time()
 	{
 		const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(

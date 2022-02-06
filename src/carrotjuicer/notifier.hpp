@@ -1,3 +1,7 @@
+/*
+	Source code from https://github.com/CNA-Bld/EXNOA-CarrotJuicer by CNA-Bld
+	Released under MIT license. Copyright belongs to CNA-Bld(https://github.com/CNA-Bld)
+*/
 #pragma once
 #include <string>
 
