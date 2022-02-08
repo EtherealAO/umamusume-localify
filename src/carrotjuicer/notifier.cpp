@@ -29,4 +29,18 @@ namespace notifier
 			}
 		}
 	}
+	void notify_request(const std::string& data)
+	{
+		if (client == nullptr) {
+			init();
+		}
+
+		if (auto res = client->Post("/notify/request", data, "application/x-msgpack"))
+		{
+			if (res->status != 200)
+			{
+				std::cout << "Unexpected response from listener: " << res->status << "\n";
+			}
+		}
+	}
 }

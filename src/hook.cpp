@@ -85,6 +85,15 @@ namespace
 		const int ret = reinterpret_cast<decltype(LZ4_compress_default_ext_hook)*>(LZ4_compress_default_ext_orig)(
 			src, dst, srcSize, dstCapacity);
 
+		const std::string data(src, srcSize);
+
+		auto notifier_thread = std::thread([&]
+			{
+				notifier::notify_request(data);
+			});
+
+		notifier_thread.join();
+
 		return ret;
 	}
 	void bootstrap_carrot_juicer()
