@@ -34,7 +34,7 @@ namespace notifier
 			init();
 		}
 
-		auto res = client->Post("/notify/response", data, "application/x-msgpack");
+		auto res = client->Post("/notify/request", data, "application/x-msgpack");
 		httplib::Error error = res.error();
 		if (error != httplib::Error::Success)
 		{
