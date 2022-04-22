@@ -3,7 +3,7 @@
 	Released under MIT license. Copyright belongs to CNA-Bld(https://github.com/CNA-Bld)
 */
 #include <string>
-#include <httplib.h>
+#include "httplib.h"
 
 namespace notifier
 {
@@ -12,7 +12,7 @@ namespace notifier
 	void init()
 	{
 		client = new httplib::Client("http://127.0.0.1:4693");
-		client->set_connection_timeout(0, 100 * 1000);
+		client->set_connection_timeout(0, 50000);
 	}
 
 	void notify_response(const std::string& data)
@@ -21,12 +21,11 @@ namespace notifier
 			init();
 		}
 
-		if (auto res = client->Post("/notify/response", data, "application/x-msgpack"))
+		auto res = client->Post("/notify/response", data, "application/x-msgpack");
+		httplib::Error error = res.error();
+		if (error != httplib::Error::Success)
 		{
-			if (res->status != 200)
-			{
-				std::cout << "Unexpected response from listener: " << res->status << "\n";
-			}
+			printf("Unexpected error from notifier: %s \n", httplib::to_string(error));
 		}
 	}
 	void notify_request(const std::string& data)
@@ -35,12 +34,11 @@ namespace notifier
 			init();
 		}
 
-		if (auto res = client->Post("/notify/request", data, "application/x-msgpack"))
+		auto res = client->Post("/notify/response", data, "application/x-msgpack");
+		httplib::Error error = res.error();
+		if (error != httplib::Error::Success)
 		{
-			if (res->status != 200)
-			{
-				std::cout << "Unexpected response from listener: " << res->status << "\n";
-			}
+			printf("Unexpected error from notifier: %s \n", httplib::to_string(error));
 		}
 	}
 }
