@@ -1,0 +1,329 @@
+.code
+
+extern Private1_Original:QWORD
+extern SvchostPushServiceGlobals_Original:QWORD
+extern WinHttpAddRequestHeaders_Original:QWORD
+extern WinHttpAutoProxySvcMain_Original:QWORD
+extern WinHttpCheckPlatform_Original:QWORD
+extern WinHttpCloseHandle_Original:QWORD
+extern WinHttpConnect_Original:QWORD
+extern WinHttpConnectionDeletePolicyEntries_Original:QWORD
+extern WinHttpConnectionDeleteProxyInfo_Original:QWORD
+extern WinHttpConnectionFreeNameList_Original:QWORD
+extern WinHttpConnectionFreeProxyInfo_Original:QWORD
+extern WinHttpConnectionFreeProxyList_Original:QWORD
+extern WinHttpConnectionGetNameList_Original:QWORD
+extern WinHttpConnectionGetProxyInfo_Original:QWORD
+extern WinHttpConnectionGetProxyList_Original:QWORD
+extern WinHttpConnectionSetPolicyEntries_Original:QWORD
+extern WinHttpConnectionSetProxyInfo_Original:QWORD
+extern WinHttpConnectionUpdateIfIndexTable_Original:QWORD
+extern WinHttpCrackUrl_Original:QWORD
+extern WinHttpCreateProxyResolver_Original:QWORD
+extern WinHttpCreateUrl_Original:QWORD
+extern WinHttpDetectAutoProxyConfigUrl_Original:QWORD
+extern WinHttpFreeProxyResult_Original:QWORD
+extern WinHttpFreeProxyResultEx_Original:QWORD
+extern WinHttpFreeProxySettings_Original:QWORD
+extern WinHttpGetDefaultProxyConfiguration_Original:QWORD
+extern WinHttpGetIEProxyConfigForCurrentUser_Original:QWORD
+extern WinHttpGetProxyForUrl_Original:QWORD
+extern WinHttpGetProxyForUrlEx_Original:QWORD
+extern WinHttpGetProxyForUrlEx2_Original:QWORD
+extern WinHttpGetProxyForUrlHvsi_Original:QWORD
+extern WinHttpGetProxyResult_Original:QWORD
+extern WinHttpGetProxyResultEx_Original:QWORD
+extern WinHttpGetProxySettingsVersion_Original:QWORD
+extern WinHttpGetTunnelSocket_Original:QWORD
+extern WinHttpOpen_Original:QWORD
+extern WinHttpOpenRequest_Original:QWORD
+extern WinHttpPacJsWorkerMain_Original:QWORD
+extern WinHttpProbeConnectivity_Original:QWORD
+extern WinHttpQueryAuthSchemes_Original:QWORD
+extern WinHttpQueryDataAvailable_Original:QWORD
+extern WinHttpQueryHeaders_Original:QWORD
+extern WinHttpQueryOption_Original:QWORD
+extern WinHttpReadData_Original:QWORD
+extern WinHttpReadProxySettings_Original:QWORD
+extern WinHttpReadProxySettingsHvsi_Original:QWORD
+extern WinHttpReceiveResponse_Original:QWORD
+extern WinHttpResetAutoProxy_Original:QWORD
+extern WinHttpSaveProxyCredentials_Original:QWORD
+extern WinHttpSendRequest_Original:QWORD
+extern WinHttpSetCredentials_Original:QWORD
+extern WinHttpSetDefaultProxyConfiguration_Original:QWORD
+extern WinHttpSetOption_Original:QWORD
+extern WinHttpSetStatusCallback_Original:QWORD
+extern WinHttpSetTimeouts_Original:QWORD
+extern WinHttpTimeFromSystemTime_Original:QWORD
+extern WinHttpTimeToSystemTime_Original:QWORD
+extern WinHttpWebSocketClose_Original:QWORD
+extern WinHttpWebSocketCompleteUpgrade_Original:QWORD
+extern WinHttpWebSocketQueryCloseStatus_Original:QWORD
+extern WinHttpWebSocketReceive_Original:QWORD
+extern WinHttpWebSocketSend_Original:QWORD
+extern WinHttpWebSocketShutdown_Original:QWORD
+extern WinHttpWriteData_Original:QWORD
+extern WinHttpWriteProxySettings_Original:QWORD
+
+Private1_EXPORT proc
+  jmp QWORD ptr Private1_Original
+Private1_EXPORT endp
+
+SvchostPushServiceGlobals_EXPORT proc
+  jmp QWORD ptr SvchostPushServiceGlobals_Original
+SvchostPushServiceGlobals_EXPORT endp
+
+WinHttpAddRequestHeaders_EXPORT proc
+  jmp QWORD ptr WinHttpAddRequestHeaders_Original
+WinHttpAddRequestHeaders_EXPORT endp
+
+WinHttpAutoProxySvcMain_EXPORT proc
+  jmp QWORD ptr WinHttpAutoProxySvcMain_Original
+WinHttpAutoProxySvcMain_EXPORT endp
+
+WinHttpCheckPlatform_EXPORT proc
+  jmp QWORD ptr WinHttpCheckPlatform_Original
+WinHttpCheckPlatform_EXPORT endp
+
+WinHttpCloseHandle_EXPORT proc
+  jmp QWORD ptr WinHttpCloseHandle_Original
+WinHttpCloseHandle_EXPORT endp
+
+WinHttpConnect_EXPORT proc
+  jmp QWORD ptr WinHttpConnect_Original
+WinHttpConnect_EXPORT endp
+
+WinHttpConnectionDeletePolicyEntries_EXPORT proc
+  jmp QWORD ptr WinHttpConnectionDeletePolicyEntries_Original
+WinHttpConnectionDeletePolicyEntries_EXPORT endp
+
+WinHttpConnectionDeleteProxyInfo_EXPORT proc
+  jmp QWORD ptr WinHttpConnectionDeleteProxyInfo_Original
+WinHttpConnectionDeleteProxyInfo_EXPORT endp
+
+WinHttpConnectionFreeNameList_EXPORT proc
+  jmp QWORD ptr WinHttpConnectionFreeNameList_Original
+WinHttpConnectionFreeNameList_EXPORT endp
+
+WinHttpConnectionFreeProxyInfo_EXPORT proc
+  jmp QWORD ptr WinHttpConnectionFreeProxyInfo_Original
+WinHttpConnectionFreeProxyInfo_EXPORT endp
+
+WinHttpConnectionFreeProxyList_EXPORT proc
+  jmp QWORD ptr WinHttpConnectionFreeProxyList_Original
+WinHttpConnectionFreeProxyList_EXPORT endp
+
+WinHttpConnectionGetNameList_EXPORT proc
+  jmp QWORD ptr WinHttpConnectionGetNameList_Original
+WinHttpConnectionGetNameList_EXPORT endp
+
+WinHttpConnectionGetProxyInfo_EXPORT proc
+  jmp QWORD ptr WinHttpConnectionGetProxyInfo_Original
+WinHttpConnectionGetProxyInfo_EXPORT endp
+
+WinHttpConnectionGetProxyList_EXPORT proc
+  jmp QWORD ptr WinHttpConnectionGetProxyList_Original
+WinHttpConnectionGetProxyList_EXPORT endp
+
+WinHttpConnectionSetPolicyEntries_EXPORT proc
+  jmp QWORD ptr WinHttpConnectionSetPolicyEntries_Original
+WinHttpConnectionSetPolicyEntries_EXPORT endp
+
+WinHttpConnectionSetProxyInfo_EXPORT proc
+  jmp QWORD ptr WinHttpConnectionSetProxyInfo_Original
+WinHttpConnectionSetProxyInfo_EXPORT endp
+
+WinHttpConnectionUpdateIfIndexTable_EXPORT proc
+  jmp QWORD ptr WinHttpConnectionUpdateIfIndexTable_Original
+WinHttpConnectionUpdateIfIndexTable_EXPORT endp
+
+WinHttpCrackUrl_EXPORT proc
+  jmp QWORD ptr WinHttpCrackUrl_Original
+WinHttpCrackUrl_EXPORT endp
+
+WinHttpCreateProxyResolver_EXPORT proc
+  jmp QWORD ptr WinHttpCreateProxyResolver_Original
+WinHttpCreateProxyResolver_EXPORT endp
+
+WinHttpCreateUrl_EXPORT proc
+  jmp QWORD ptr WinHttpCreateUrl_Original
+WinHttpCreateUrl_EXPORT endp
+
+WinHttpDetectAutoProxyConfigUrl_EXPORT proc
+  jmp QWORD ptr WinHttpDetectAutoProxyConfigUrl_Original
+WinHttpDetectAutoProxyConfigUrl_EXPORT endp
+
+WinHttpFreeProxyResult_EXPORT proc
+  jmp QWORD ptr WinHttpFreeProxyResult_Original
+WinHttpFreeProxyResult_EXPORT endp
+
+WinHttpFreeProxyResultEx_EXPORT proc
+  jmp QWORD ptr WinHttpFreeProxyResultEx_Original
+WinHttpFreeProxyResultEx_EXPORT endp
+
+WinHttpFreeProxySettings_EXPORT proc
+  jmp QWORD ptr WinHttpFreeProxySettings_Original
+WinHttpFreeProxySettings_EXPORT endp
+
+WinHttpGetDefaultProxyConfiguration_EXPORT proc
+  jmp QWORD ptr WinHttpGetDefaultProxyConfiguration_Original
+WinHttpGetDefaultProxyConfiguration_EXPORT endp
+
+WinHttpGetIEProxyConfigForCurrentUser_EXPORT proc
+  jmp QWORD ptr WinHttpGetIEProxyConfigForCurrentUser_Original
+WinHttpGetIEProxyConfigForCurrentUser_EXPORT endp
+
+WinHttpGetProxyForUrl_EXPORT proc
+  jmp QWORD ptr WinHttpGetProxyForUrl_Original
+WinHttpGetProxyForUrl_EXPORT endp
+
+WinHttpGetProxyForUrlEx_EXPORT proc
+  jmp QWORD ptr WinHttpGetProxyForUrlEx_Original
+WinHttpGetProxyForUrlEx_EXPORT endp
+
+WinHttpGetProxyForUrlEx2_EXPORT proc
+  jmp QWORD ptr WinHttpGetProxyForUrlEx2_Original
+WinHttpGetProxyForUrlEx2_EXPORT endp
+
+WinHttpGetProxyForUrlHvsi_EXPORT proc
+  jmp QWORD ptr WinHttpGetProxyForUrlHvsi_Original
+WinHttpGetProxyForUrlHvsi_EXPORT endp
+
+WinHttpGetProxyResult_EXPORT proc
+  jmp QWORD ptr WinHttpGetProxyResult_Original
+WinHttpGetProxyResult_EXPORT endp
+
+WinHttpGetProxyResultEx_EXPORT proc
+  jmp QWORD ptr WinHttpGetProxyResultEx_Original
+WinHttpGetProxyResultEx_EXPORT endp
+
+WinHttpGetProxySettingsVersion_EXPORT proc
+  jmp QWORD ptr WinHttpGetProxySettingsVersion_Original
+WinHttpGetProxySettingsVersion_EXPORT endp
+
+WinHttpGetTunnelSocket_EXPORT proc
+  jmp QWORD ptr WinHttpGetTunnelSocket_Original
+WinHttpGetTunnelSocket_EXPORT endp
+
+WinHttpOpen_EXPORT proc
+  jmp QWORD ptr WinHttpOpen_Original
+WinHttpOpen_EXPORT endp
+
+WinHttpOpenRequest_EXPORT proc
+  jmp QWORD ptr WinHttpOpenRequest_Original
+WinHttpOpenRequest_EXPORT endp
+
+WinHttpPacJsWorkerMain_EXPORT proc
+  jmp QWORD ptr WinHttpPacJsWorkerMain_Original
+WinHttpPacJsWorkerMain_EXPORT endp
+
+WinHttpProbeConnectivity_EXPORT proc
+  jmp QWORD ptr WinHttpProbeConnectivity_Original
+WinHttpProbeConnectivity_EXPORT endp
+
+WinHttpQueryAuthSchemes_EXPORT proc
+  jmp QWORD ptr WinHttpQueryAuthSchemes_Original
+WinHttpQueryAuthSchemes_EXPORT endp
+
+WinHttpQueryDataAvailable_EXPORT proc
+  jmp QWORD ptr WinHttpQueryDataAvailable_Original
+WinHttpQueryDataAvailable_EXPORT endp
+
+WinHttpQueryHeaders_EXPORT proc
+  jmp QWORD ptr WinHttpQueryHeaders_Original
+WinHttpQueryHeaders_EXPORT endp
+
+WinHttpQueryOption_EXPORT proc
+  jmp QWORD ptr WinHttpQueryOption_Original
+WinHttpQueryOption_EXPORT endp
+
+WinHttpReadData_EXPORT proc
+  jmp QWORD ptr WinHttpReadData_Original
+WinHttpReadData_EXPORT endp
+
+WinHttpReadProxySettings_EXPORT proc
+  jmp QWORD ptr WinHttpReadProxySettings_Original
+WinHttpReadProxySettings_EXPORT endp
+
+WinHttpReadProxySettingsHvsi_EXPORT proc
+  jmp QWORD ptr WinHttpReadProxySettingsHvsi_Original
+WinHttpReadProxySettingsHvsi_EXPORT endp
+
+WinHttpReceiveResponse_EXPORT proc
+  jmp QWORD ptr WinHttpReceiveResponse_Original
+WinHttpReceiveResponse_EXPORT endp
+
+WinHttpResetAutoProxy_EXPORT proc
+  jmp QWORD ptr WinHttpResetAutoProxy_Original
+WinHttpResetAutoProxy_EXPORT endp
+
+WinHttpSaveProxyCredentials_EXPORT proc
+  jmp QWORD ptr WinHttpSaveProxyCredentials_Original
+WinHttpSaveProxyCredentials_EXPORT endp
+
+WinHttpSendRequest_EXPORT proc
+  jmp QWORD ptr WinHttpSendRequest_Original
+WinHttpSendRequest_EXPORT endp
+
+WinHttpSetCredentials_EXPORT proc
+  jmp QWORD ptr WinHttpSetCredentials_Original
+WinHttpSetCredentials_EXPORT endp
+
+WinHttpSetDefaultProxyConfiguration_EXPORT proc
+  jmp QWORD ptr WinHttpSetDefaultProxyConfiguration_Original
+WinHttpSetDefaultProxyConfiguration_EXPORT endp
+
+WinHttpSetOption_EXPORT proc
+  jmp QWORD ptr WinHttpSetOption_Original
+WinHttpSetOption_EXPORT endp
+
+WinHttpSetStatusCallback_EXPORT proc
+  jmp QWORD ptr WinHttpSetStatusCallback_Original
+WinHttpSetStatusCallback_EXPORT endp
+
+WinHttpSetTimeouts_EXPORT proc
+  jmp QWORD ptr WinHttpSetTimeouts_Original
+WinHttpSetTimeouts_EXPORT endp
+
+WinHttpTimeFromSystemTime_EXPORT proc
+  jmp QWORD ptr WinHttpTimeFromSystemTime_Original
+WinHttpTimeFromSystemTime_EXPORT endp
+
+WinHttpTimeToSystemTime_EXPORT proc
+  jmp QWORD ptr WinHttpTimeToSystemTime_Original
+WinHttpTimeToSystemTime_EXPORT endp
+
+WinHttpWebSocketClose_EXPORT proc
+  jmp QWORD ptr WinHttpWebSocketClose_Original
+WinHttpWebSocketClose_EXPORT endp
+
+WinHttpWebSocketCompleteUpgrade_EXPORT proc
+  jmp QWORD ptr WinHttpWebSocketCompleteUpgrade_Original
+WinHttpWebSocketCompleteUpgrade_EXPORT endp
+
+WinHttpWebSocketQueryCloseStatus_EXPORT proc
+  jmp QWORD ptr WinHttpWebSocketQueryCloseStatus_Original
+WinHttpWebSocketQueryCloseStatus_EXPORT endp
+
+WinHttpWebSocketReceive_EXPORT proc
+  jmp QWORD ptr WinHttpWebSocketReceive_Original
+WinHttpWebSocketReceive_EXPORT endp
+
+WinHttpWebSocketSend_EXPORT proc
+  jmp QWORD ptr WinHttpWebSocketSend_Original
+WinHttpWebSocketSend_EXPORT endp
+
+WinHttpWebSocketShutdown_EXPORT proc
+  jmp QWORD ptr WinHttpWebSocketShutdown_Original
+WinHttpWebSocketShutdown_EXPORT endp
+
+WinHttpWriteData_EXPORT proc
+  jmp QWORD ptr WinHttpWriteData_Original
+WinHttpWriteData_EXPORT endp
+
+WinHttpWriteProxySettings_EXPORT proc
+  jmp QWORD ptr WinHttpWriteProxySettings_Original
+WinHttpWriteProxySettings_EXPORT endp
+
+end

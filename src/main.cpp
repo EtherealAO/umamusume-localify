@@ -1,4 +1,5 @@
 #include <stdinclude.hpp>
+#include <./dllproxy/proxy.hpp>
 
 extern bool init_hook();
 extern void uninit_hook();
@@ -77,7 +78,7 @@ namespace
 	}
 }
 
-int __stdcall DllMain(HINSTANCE, DWORD reason, LPVOID)
+int __stdcall DllMain(HINSTANCE hInstance, DWORD reason, LPVOID)
 {
 	if (reason == DLL_PROCESS_ATTACH)
 	{
@@ -87,6 +88,13 @@ int __stdcall DllMain(HINSTANCE, DWORD reason, LPVOID)
 		module_name.resize(GetModuleFileName(nullptr, module_name.data(), MAX_PATH));
 
 		std::filesystem::path module_path(module_name);
+
+		LPSTR proxy_filename_buffer = new CHAR[MAX_PATH];
+		GetModuleFileNameA(hInstance, proxy_filename_buffer, MAX_PATH);
+		std::filesystem::path proxy_filename_path(proxy_filename_buffer);
+		std::string proxy_filename = proxy_filename_path.filename().string();
+		std::for_each(proxy_filename.begin(), proxy_filename.end(), [](char& character) { character = ::tolower(character); });
+		proxy::init_proxy(proxy_filename);
 
 		// check name
 		if (module_path.filename() != "umamusume.exe")

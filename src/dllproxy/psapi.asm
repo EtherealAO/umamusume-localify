@@ -1,0 +1,139 @@
+.code
+
+extern EmptyWorkingSet_Original:QWORD
+extern EnumDeviceDrivers_Original:QWORD
+extern EnumPageFilesA_Original:QWORD
+extern EnumPageFilesW_Original:QWORD
+extern EnumProcessModules_Original:QWORD
+extern EnumProcessModulesEx_Original:QWORD
+extern EnumProcesses_Original:QWORD
+extern GetDeviceDriverBaseNameA_Original:QWORD
+extern GetDeviceDriverBaseNameW_Original:QWORD
+extern GetDeviceDriverFileNameA_Original:QWORD
+extern GetDeviceDriverFileNameW_Original:QWORD
+extern GetMappedFileNameA_Original:QWORD
+extern GetMappedFileNameW_Original:QWORD
+extern GetModuleBaseNameA_Original:QWORD
+extern GetModuleBaseNameW_Original:QWORD
+extern GetModuleFileNameExA_Original:QWORD
+extern GetModuleFileNameExW_Original:QWORD
+extern GetModuleInformation_Original:QWORD
+extern GetPerformanceInfo_Original:QWORD
+extern GetProcessImageFileNameA_Original:QWORD
+extern GetProcessImageFileNameW_Original:QWORD
+extern GetProcessMemoryInfo_Original:QWORD
+extern GetWsChanges_Original:QWORD
+extern GetWsChangesEx_Original:QWORD
+extern InitializeProcessForWsWatch_Original:QWORD
+extern QueryWorkingSet_Original:QWORD
+extern QueryWorkingSetEx_Original:QWORD
+
+EmptyWorkingSet_EXPORT proc
+  jmp QWORD ptr EmptyWorkingSet_Original
+EmptyWorkingSet_EXPORT endp
+
+EnumDeviceDrivers_EXPORT proc
+  jmp QWORD ptr EnumDeviceDrivers_Original
+EnumDeviceDrivers_EXPORT endp
+
+EnumPageFilesA_EXPORT proc
+  jmp QWORD ptr EnumPageFilesA_Original
+EnumPageFilesA_EXPORT endp
+
+EnumPageFilesW_EXPORT proc
+  jmp QWORD ptr EnumPageFilesW_Original
+EnumPageFilesW_EXPORT endp
+
+EnumProcessModules_EXPORT proc
+  jmp QWORD ptr EnumProcessModules_Original
+EnumProcessModules_EXPORT endp
+
+EnumProcessModulesEx_EXPORT proc
+  jmp QWORD ptr EnumProcessModulesEx_Original
+EnumProcessModulesEx_EXPORT endp
+
+EnumProcesses_EXPORT proc
+  jmp QWORD ptr EnumProcesses_Original
+EnumProcesses_EXPORT endp
+
+GetDeviceDriverBaseNameA_EXPORT proc
+  jmp QWORD ptr GetDeviceDriverBaseNameA_Original
+GetDeviceDriverBaseNameA_EXPORT endp
+
+GetDeviceDriverBaseNameW_EXPORT proc
+  jmp QWORD ptr GetDeviceDriverBaseNameW_Original
+GetDeviceDriverBaseNameW_EXPORT endp
+
+GetDeviceDriverFileNameA_EXPORT proc
+  jmp QWORD ptr GetDeviceDriverFileNameA_Original
+GetDeviceDriverFileNameA_EXPORT endp
+
+GetDeviceDriverFileNameW_EXPORT proc
+  jmp QWORD ptr GetDeviceDriverFileNameW_Original
+GetDeviceDriverFileNameW_EXPORT endp
+
+GetMappedFileNameA_EXPORT proc
+  jmp QWORD ptr GetMappedFileNameA_Original
+GetMappedFileNameA_EXPORT endp
+
+GetMappedFileNameW_EXPORT proc
+  jmp QWORD ptr GetMappedFileNameW_Original
+GetMappedFileNameW_EXPORT endp
+
+GetModuleBaseNameA_EXPORT proc
+  jmp QWORD ptr GetModuleBaseNameA_Original
+GetModuleBaseNameA_EXPORT endp
+
+GetModuleBaseNameW_EXPORT proc
+  jmp QWORD ptr GetModuleBaseNameW_Original
+GetModuleBaseNameW_EXPORT endp
+
+GetModuleFileNameExA_EXPORT proc
+  jmp QWORD ptr GetModuleFileNameExA_Original
+GetModuleFileNameExA_EXPORT endp
+
+GetModuleFileNameExW_EXPORT proc
+  jmp QWORD ptr GetModuleFileNameExW_Original
+GetModuleFileNameExW_EXPORT endp
+
+GetModuleInformation_EXPORT proc
+  jmp QWORD ptr GetModuleInformation_Original
+GetModuleInformation_EXPORT endp
+
+GetPerformanceInfo_EXPORT proc
+  jmp QWORD ptr GetPerformanceInfo_Original
+GetPerformanceInfo_EXPORT endp
+
+GetProcessImageFileNameA_EXPORT proc
+  jmp QWORD ptr GetProcessImageFileNameA_Original
+GetProcessImageFileNameA_EXPORT endp
+
+GetProcessImageFileNameW_EXPORT proc
+  jmp QWORD ptr GetProcessImageFileNameW_Original
+GetProcessImageFileNameW_EXPORT endp
+
+GetProcessMemoryInfo_EXPORT proc
+  jmp QWORD ptr GetProcessMemoryInfo_Original
+GetProcessMemoryInfo_EXPORT endp
+
+GetWsChanges_EXPORT proc
+  jmp QWORD ptr GetWsChanges_Original
+GetWsChanges_EXPORT endp
+
+GetWsChangesEx_EXPORT proc
+  jmp QWORD ptr GetWsChangesEx_Original
+GetWsChangesEx_EXPORT endp
+
+InitializeProcessForWsWatch_EXPORT proc
+  jmp QWORD ptr InitializeProcessForWsWatch_Original
+InitializeProcessForWsWatch_EXPORT endp
+
+QueryWorkingSet_EXPORT proc
+  jmp QWORD ptr QueryWorkingSet_Original
+QueryWorkingSet_EXPORT endp
+
+QueryWorkingSetEx_EXPORT proc
+  jmp QWORD ptr QueryWorkingSetEx_Original
+QueryWorkingSetEx_EXPORT endp
+
+end
