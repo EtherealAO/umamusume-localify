@@ -25,7 +25,7 @@ namespace notifier
 		httplib::Error error = res.error();
 		if (error != httplib::Error::Success)
 		{
-			printf("Unexpected error from notifier: %s \n", httplib::to_string(error));
+			std::cout << "Unexpected error from notifier: " << httplib::to_string(error) << "\n";
 		}
 	}
 	void notify_request(const std::string& data)
@@ -38,7 +38,7 @@ namespace notifier
 		httplib::Error error = res.error();
 		if (error != httplib::Error::Success)
 		{
-			printf("Unexpected error from notifier: %s \n", httplib::to_string(error));
+			std::cout << "Unexpected error from notifier: " << httplib::to_string(error) << "\n";
 		}
 	}
 }
