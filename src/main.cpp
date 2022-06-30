@@ -5,6 +5,7 @@ extern bool init_hook();
 extern void uninit_hook();
 extern void start_console();
 
+bool compatible_mode = false;
 bool g_dump_entries = false;
 bool g_enable_logger = false;
 bool g_enable_console = false;
@@ -32,23 +33,23 @@ namespace
 		SetConsoleOutputCP(65001);
 		std::locale::global(std::locale(""));
 
-		wprintf(L"\u30a6\u30de\u5a18 Localify Patch Loaded! - By GEEKiDoS\n");
+		wprintf(L"\u30a6\u30de\u5a18 Localify Patch Loaded! - By GEEKiDoS, Modified By Lipi\n");
 	}
 
 	std::vector<std::string> read_config()
 	{
-		std::ifstream config_stream { "config.json" };
-		std::vector<std::string> dicts {};
+		std::ifstream config_stream{ "config.json" };
+		std::vector<std::string> dicts{};
 
 		if (!config_stream.is_open())
 			return dicts;
 
-		rapidjson::IStreamWrapper wrapper {config_stream};
+		rapidjson::IStreamWrapper wrapper{ config_stream };
 		rapidjson::Document document;
 
 		document.ParseStream(wrapper);
 
-		if (!document.HasParseError())
+		if (!document.HasParseError() && !compatible_mode)
 		{
 			g_enable_console = document["enableConsole"].GetBool();
 			g_enable_logger = document["enableLogger"].GetBool();
@@ -94,6 +95,7 @@ int __stdcall DllMain(HINSTANCE hInstance, DWORD reason, LPVOID)
 		std::filesystem::path proxy_filename_path(proxy_filename_buffer);
 		std::string proxy_filename = proxy_filename_path.filename().string();
 		std::for_each(proxy_filename.begin(), proxy_filename.end(), [](char& character) { character = ::tolower(character); });
+		compatible_mode = proxy_filename != "version.dll";
 		proxy::init_proxy(proxy_filename);
 
 		// check name
@@ -106,8 +108,8 @@ int __stdcall DllMain(HINSTANCE hInstance, DWORD reason, LPVOID)
 
 		auto dicts = read_config();
 
-		if(g_enable_console)
-		 	create_debug_console();
+		if (g_enable_console)
+			create_debug_console();
 
 		std::thread init_thread([dicts]() {
 			logger::init_logger();
@@ -116,7 +118,7 @@ int __stdcall DllMain(HINSTANCE hInstance, DWORD reason, LPVOID)
 
 			if (g_enable_console)
 				start_console();
-		});
+			});
 		init_thread.detach();
 	}
 	else if (reason == DLL_PROCESS_DETACH)

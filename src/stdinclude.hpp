@@ -25,6 +25,7 @@
 #include "local/local.hpp"
 #include "logger/logger.hpp"
 
+extern bool compatible_mode;
 extern bool g_dump_entries;
 extern bool g_enable_logger;
 extern bool g_enable_console;

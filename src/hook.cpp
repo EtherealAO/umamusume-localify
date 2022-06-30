@@ -400,7 +400,7 @@ namespace
 	void dump_all_entries()
 	{
 		// 0 is None
-		for (int i = 1;;i++)
+		for (int i = 1;; i++)
 		{
 			auto* str = reinterpret_cast<decltype(localize_get_hook)*>(localize_get_orig)(i);
 
@@ -584,51 +584,53 @@ namespace
 		auto load_scene_internal_addr = il2cpp_resolve_icall("UnityEngine.SceneManagement.SceneManager::LoadSceneAsyncNameIndexInternal_Injected(System.String,System.Int32,UnityEngine.SceneManagement.LoadSceneParameters&,System.Boolean)");
 #pragma endregion
 
-		// hook UnityEngine.TextGenerator::PopulateWithErrors to modify text
-		ADD_HOOK(populate_with_errors, "UnityEngine.TextGenerator::PopulateWithErrors at %p\n");
+		if (!compatible_mode) {
+			// hook UnityEngine.TextGenerator::PopulateWithErrors to modify text
+			ADD_HOOK(populate_with_errors, "UnityEngine.TextGenerator::PopulateWithErrors at %p\n");
 
-		// Looks like they store all localized texts that used by code in a dict
-		ADD_HOOK(localize_get, "Gallop.Localize.Get(TextId) at %p\n");
+			// Looks like they store all localized texts that used by code in a dict
+			ADD_HOOK(localize_get, "Gallop.Localize.Get(TextId) at %p\n");
 
-		ADD_HOOK(query_ctor, "Query::ctor at %p\n");
-		ADD_HOOK(query_getstr, "Query::GetString at %p\n");
-		ADD_HOOK(query_dispose, "Query::Dispose at %p\n");
+			ADD_HOOK(query_ctor, "Query::ctor at %p\n");
+			ADD_HOOK(query_getstr, "Query::GetString at %p\n");
+			ADD_HOOK(query_dispose, "Query::Dispose at %p\n");
 
-		// ADD_HOOK(load_scene_internal, "SceneManager::LoadSceneAsyncNameIndexInternal at %p\n");
+			// ADD_HOOK(load_scene_internal, "SceneManager::LoadSceneAsyncNameIndexInternal at %p\n");
 
-		if (g_replace_font)
-		{
-			ADD_HOOK(on_populate, "Gallop.TextCommon::OnPopulateMesh at %p\n");
+			if (g_replace_font)
+			{
+				ADD_HOOK(on_populate, "Gallop.TextCommon::OnPopulateMesh at %p\n");
+			}
+
+			if (g_max_fps > -1)
+			{
+				// break 30-40fps limit
+				ADD_HOOK(set_fps, "UnityEngine.Application.set_targetFrameRate at %p \n");
+			}
+
+			if (g_unlock_size)
+			{
+				// break 1080p size limit
+				ADD_HOOK(get_virt_size, "Gallop.StandaloneWindowResize.getOptimizedWindowSizeVirt at %p \n");
+				ADD_HOOK(get_hori_size, "Gallop.StandaloneWindowResize.getOptimizedWindowSizeHori at %p \n");
+				ADD_HOOK(wndproc, "Gallop.StandaloneWindowResize.WndProc at %p \n");
+
+				// remove fixed 1080p render resolution
+				ADD_HOOK(gallop_get_screenheight, "Gallop.Screen::get_Height at %p\n");
+				ADD_HOOK(gallop_get_screenwidth, "Gallop.Screen::get_Width at %p\n");
+
+				ADD_HOOK(canvas_scaler_setres, "UnityEngine.UI.CanvasScaler::set_referenceResolution at %p\n");
+			}
+
+			if (g_auto_fullscreen)
+			{
+				ADD_HOOK(set_resolution, "UnityEngine.Screen.SetResolution(int, int, bool) at %p\n");
+				adjust_size();
+			}
+
+			if (g_dump_entries)
+				dump_all_entries();
 		}
-
-		if (g_max_fps > -1)
-		{
-			// break 30-40fps limit
-			ADD_HOOK(set_fps, "UnityEngine.Application.set_targetFrameRate at %p \n");
-		}
-
-		if (g_unlock_size)
-		{
-			// break 1080p size limit
-			ADD_HOOK(get_virt_size, "Gallop.StandaloneWindowResize.getOptimizedWindowSizeVirt at %p \n");
-			ADD_HOOK(get_hori_size, "Gallop.StandaloneWindowResize.getOptimizedWindowSizeHori at %p \n");
-			ADD_HOOK(wndproc, "Gallop.StandaloneWindowResize.WndProc at %p \n");
-
-			// remove fixed 1080p render resolution
-			ADD_HOOK(gallop_get_screenheight, "Gallop.Screen::get_Height at %p\n");
-			ADD_HOOK(gallop_get_screenwidth, "Gallop.Screen::get_Width at %p\n");
-
-			ADD_HOOK(canvas_scaler_setres, "UnityEngine.UI.CanvasScaler::set_referenceResolution at %p\n");
-		}
-
-		if (g_auto_fullscreen)
-		{
-			ADD_HOOK(set_resolution, "UnityEngine.Screen.SetResolution(int, int, bool) at %p\n");
-			adjust_size();
-		}
-
-		if (g_dump_entries)
-			dump_all_entries();
 	}
 }
 
@@ -642,6 +644,8 @@ bool init_hook()
 
 	mh_inited = true;
 
+	if (compatible_mode)
+		std::this_thread::sleep_for(std::chrono::seconds(10));
 	MH_CreateHook(LoadLibraryW, load_library_w_hook, &load_library_w_orig);
 	MH_EnableHook(LoadLibraryW);
 
