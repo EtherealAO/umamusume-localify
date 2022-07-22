@@ -4,6 +4,8 @@
 ### 缝合[EXNOA-CarrotJuicer](https://github.com/CNA-Bld/EXNOA-CarrotJuicer)的抓包、http notifier到umamusume-localify里使解锁帧数可以同时和抓包使用
 ### 使用方法:
 1. 将 `version.dll` 和 `config.json` 以及 `config.json` 中引用的字典放置于 `umamusume.exe` 边上
+<br>1-1. 当有其他插件占用了version.dll时，可将本插件的文件名从version.dll改成winhttp.dll启用兼容模式。
+<br>&emsp;&emsp;*在兼容模式下会延迟10秒HOOK，且除了notifier以外的其他功能均被禁用。
 2. 启动游戏
 
 ### 设置选项:
