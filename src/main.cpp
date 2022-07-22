@@ -15,6 +15,7 @@ float g_ui_scale = 1.0f;
 float g_aspect_ratio = 16.f / 9.f;
 bool g_replace_font = true;
 bool g_auto_fullscreen = true;
+std::string g_notifier_host = "http://127.0.0.1:4693";
 
 namespace
 {
@@ -73,6 +74,8 @@ namespace
 				dicts.push_back(dict);
 			}
 		}
+		if (document.HasMember("notifier_host"))
+			g_notifier_host = document["notifier_host"].GetString();
 
 		config_stream.close();
 		return dicts;

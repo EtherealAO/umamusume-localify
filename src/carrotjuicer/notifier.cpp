@@ -4,6 +4,7 @@
 */
 #include <string>
 #include "httplib.h"
+#include "stdinclude.hpp"
 
 namespace notifier
 {
@@ -11,10 +12,40 @@ namespace notifier
 
 	void init()
 	{
-		client = new httplib::Client("http://127.0.0.1:4693");
+		client = new httplib::Client(g_notifier_host);
 		client->set_connection_timeout(0, 50000);
 	}
 
+	void ping() {
+		if (client == nullptr) {
+			init();
+		}
+
+		auto res = client->Get("/notify/ping");
+		auto error = res.error();
+		int mb_select = 0;
+		if (error != httplib::Error::Success) {
+			std::ostringstream oss;
+			oss << "无法连接到URA: " << httplib::to_string(error);
+			mb_select = MessageBox(NULL, oss.str().c_str(), "umamusume-localify", MB_ABORTRETRYIGNORE | MB_ICONERROR);
+		}
+		else if (res.value().body != "pong") {
+			std::ostringstream oss;
+			oss << "URA返回值异常: " << res.value().body;
+			mb_select = MessageBox(NULL, oss.str().c_str(), "umamusume-localify", MB_ABORTRETRYIGNORE | MB_ICONERROR);
+		}
+		switch (mb_select)
+		{
+		case IDABORT:
+			exit(0);
+			break;
+		case IDRETRY:
+			ping();
+			break;
+		default:
+			break;
+		}
+	}
 	void notify_response(const std::string& data)
 	{
 		if (client == nullptr) {
