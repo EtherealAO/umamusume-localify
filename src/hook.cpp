@@ -374,6 +374,20 @@ namespace
 			);
 	}
 
+	void* get_DatabaseSavePath_orig;
+	Il2CppString* get_DatabaseSavePath_hook() {
+		if (g_savedata_path.empty())
+		{
+			return reinterpret_cast<decltype(get_DatabaseSavePath_hook)*>(get_DatabaseSavePath_orig)();
+		}
+		else
+		{
+			Il2CppString* ovr = il2cpp_string_new(g_savedata_path.c_str());
+			wprintf(L"Override SaveDataPath to %s\n", ovr->start_char);
+			return ovr;
+		}
+	}
+
 	void adjust_size()
 	{
 		thread([]() {
@@ -581,6 +595,11 @@ namespace
 			"Screen", "SetResolution", 3
 		);
 
+		auto get_DatabaseSavePath_addr = il2cpp_symbols::get_method_pointer(
+			"umamusume.dll", "Gallop",
+			"SaveDataManager", "get_DatabaseSavePath", 0
+		);
+
 		auto load_scene_internal_addr = il2cpp_resolve_icall("UnityEngine.SceneManagement.SceneManager::LoadSceneAsyncNameIndexInternal_Injected(System.String,System.Int32,UnityEngine.SceneManagement.LoadSceneParameters&,System.Boolean)");
 #pragma endregion
 
@@ -626,6 +645,11 @@ namespace
 			{
 				ADD_HOOK(set_resolution, "UnityEngine.Screen.SetResolution(int, int, bool) at %p\n");
 				adjust_size();
+			}
+
+			if (!g_savedata_path.empty())
+			{
+				ADD_HOOK(get_DatabaseSavePath, "get_DatabaseSavePath at %p\n");
 			}
 
 			if (g_dump_entries)

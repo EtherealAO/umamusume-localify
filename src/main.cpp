@@ -16,6 +16,7 @@ float g_aspect_ratio = 16.f / 9.f;
 bool g_replace_font = true;
 bool g_auto_fullscreen = true;
 std::string g_notifier_host = "http://127.0.0.1:4693";
+std::string g_savedata_path = "";
 
 namespace
 {
@@ -76,6 +77,8 @@ namespace
 		}
 		if (document.HasMember("notifier_host"))
 			g_notifier_host = document["notifier_host"].GetString();
+		if (document.HasMember("savedata_path"))
+			g_savedata_path = document["savedata_path"].GetString();
 
 		config_stream.close();
 		return dicts;

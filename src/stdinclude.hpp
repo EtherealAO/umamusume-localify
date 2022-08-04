@@ -36,3 +36,4 @@ extern float g_aspect_ratio;
 extern bool g_replace_font;
 extern bool g_auto_fullscreen;
 extern std::string g_notifier_host;
+extern std::string g_savedata_path;
