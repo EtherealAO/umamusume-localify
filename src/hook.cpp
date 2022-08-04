@@ -7,8 +7,6 @@ namespace
 {
 	void path_game_assembly();
 
-	bool mh_inited = false;
-
 	void dump_bytes(void* pos)
 	{
 		printf("Hex dump of %p\n", pos);
@@ -124,6 +122,7 @@ namespace
 		MH_EnableHook(LZ4_compress_default_ext_ptr);
 	}
 	//Carrot Juice End
+
 	void* load_library_w_orig = nullptr;
 	HMODULE __stdcall load_library_w_hook(const wchar_t* path)
 	{
@@ -434,9 +433,6 @@ namespace
 
 	void path_game_assembly()
 	{
-		if (!mh_inited)
-			return;
-
 		printf("Trying to patch GameAssembly.dll...\n");
 
 		auto il2cpp_module = GetModuleHandle("GameAssembly.dll");
@@ -660,14 +656,6 @@ namespace
 
 bool init_hook()
 {
-	if (mh_inited)
-		return false;
-
-	if (MH_Initialize() != MH_OK)
-		return false;
-
-	mh_inited = true;
-
 	if (compatible_mode)
 		std::this_thread::sleep_for(std::chrono::seconds(10));
 	MH_CreateHook(LoadLibraryW, load_library_w_hook, &load_library_w_orig);
@@ -680,9 +668,6 @@ bool init_hook()
 
 void uninit_hook()
 {
-	if (!mh_inited)
-		return;
-
 	MH_DisableHook(MH_ALL_HOOKS);
 	MH_Uninitialize();
 }

@@ -15,6 +15,7 @@ float g_ui_scale = 1.0f;
 float g_aspect_ratio = 16.f / 9.f;
 bool g_replace_font = true;
 bool g_auto_fullscreen = true;
+bool g_skip_single_instance_check = true;
 std::string g_notifier_host = "http://127.0.0.1:4693";
 std::string g_savedata_path = "";
 
@@ -79,12 +80,31 @@ namespace
 			g_notifier_host = document["notifier_host"].GetString();
 		if (document.HasMember("savedata_path"))
 			g_savedata_path = document["savedata_path"].GetString();
+		if (document.HasMember("skip_single_instance_check"))
+			g_skip_single_instance_check = document["skip_single_instance_check"].GetBool();
 
 		config_stream.close();
 		return dicts;
 	}
 }
 
+
+void* CreateMutex_orig = nullptr;
+void* CreateMutexDetour(
+	LPSECURITY_ATTRIBUTES lpMutexAttributes,
+	BOOL                  bInitialOwner,
+	LPCSTR                lpName)
+{
+	if (strstr(lpName, "-SingleInstanceMutex-")) {
+		std::ostringstream oss;
+		oss << lpName << '-' << std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+		MH_DisableHook(&CreateMutex);
+		MH_RemoveHook(&CreateMutex);
+		return reinterpret_cast<decltype(CreateMutex)*>(CreateMutex_orig)(lpMutexAttributes, bInitialOwner, oss.str().c_str());
+	}
+
+	return reinterpret_cast<decltype(CreateMutex)*>(CreateMutex_orig)(lpMutexAttributes, bInitialOwner, lpName);
+}
 int __stdcall DllMain(HINSTANCE hInstance, DWORD reason, LPVOID)
 {
 	if (reason == DLL_PROCESS_ATTACH)
@@ -117,6 +137,11 @@ int __stdcall DllMain(HINSTANCE hInstance, DWORD reason, LPVOID)
 		if (g_enable_console)
 			create_debug_console();
 
+		MH_Initialize();
+		if (g_skip_single_instance_check) {
+			MH_CreateHook(&CreateMutex, &CreateMutexDetour, &CreateMutex_orig);
+			MH_EnableHook(&CreateMutex);
+		}
 		std::thread init_thread([dicts]() {
 			logger::init_logger();
 			local::load_textdb(&dicts);
