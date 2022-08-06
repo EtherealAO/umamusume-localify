@@ -98,8 +98,6 @@ void* CreateMutexDetour(
 	if (strstr(lpName, "-SingleInstanceMutex-")) {
 		std::ostringstream oss;
 		oss << lpName << '-' << std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-		MH_DisableHook(&CreateMutex);
-		MH_RemoveHook(&CreateMutex);
 		return reinterpret_cast<decltype(CreateMutex)*>(CreateMutex_orig)(lpMutexAttributes, bInitialOwner, oss.str().c_str());
 	}
 
