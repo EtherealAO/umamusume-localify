@@ -387,6 +387,20 @@ namespace
 		}
 	}
 
+	void* GetMasterdataDirectory_orig = nullptr;
+	Il2CppString* GetMasterdataDirectory_hook() {
+		if (g_savedata_path.empty())
+		{
+			return reinterpret_cast<decltype(GetMasterdataDirectory_hook)*>(GetMasterdataDirectory_orig)();
+		}
+		else
+		{
+			Il2CppString* ovr = il2cpp_string_new(g_savedata_path.c_str());
+			wprintf(L"Override GetMasterdataDirectory to %s\n", ovr->start_char);
+			return ovr;
+		}
+	}
+
 	void adjust_size()
 	{
 		thread([]() {
@@ -445,7 +459,6 @@ namespace
 	auto _name_##_offset = reinterpret_cast<void*>(_name_##_addr); \
 	\
 	printf(_fmt_, _name_##_offset); \
-	dump_bytes(_name_##_offset); \
 	\
 	MH_CreateHook(_name_##_offset, _name_##_hook, &_name_##_orig); \
 	MH_EnableHook(_name_##_offset); 
@@ -596,6 +609,11 @@ namespace
 			"SaveDataManager", "get_DatabaseSavePath", 0
 		);
 
+		auto GetMasterdataDirectory_addr = il2cpp_symbols::get_method_pointer(
+			"umamusume.dll", "Gallop",
+			"MasterDataManager", "GetMasterdataDirectory", 0
+		);
+
 		auto load_scene_internal_addr = il2cpp_resolve_icall("UnityEngine.SceneManagement.SceneManager::LoadSceneAsyncNameIndexInternal_Injected(System.String,System.Int32,UnityEngine.SceneManagement.LoadSceneParameters&,System.Boolean)");
 #pragma endregion
 
@@ -646,6 +664,7 @@ namespace
 			if (!g_savedata_path.empty())
 			{
 				ADD_HOOK(get_DatabaseSavePath, "get_DatabaseSavePath at %p\n");
+				ADD_HOOK(GetMasterdataDirectory, "GetMasterdataDirectory at %p\n");
 			}
 
 			if (g_dump_entries)

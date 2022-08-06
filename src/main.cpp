@@ -95,7 +95,7 @@ void* CreateMutexDetour(
 	BOOL                  bInitialOwner,
 	LPCSTR                lpName)
 {
-	if (strstr(lpName, "-SingleInstanceMutex-")) {
+	if (lpName != NULL && strstr(lpName, "-SingleInstanceMutex-")) {
 		std::ostringstream oss;
 		oss << lpName << '-' << std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 		return reinterpret_cast<decltype(CreateMutex)*>(CreateMutex_orig)(lpMutexAttributes, bInitialOwner, oss.str().c_str());
